@@ -6,11 +6,12 @@ import 'package:todo_app/view/screens/home_screen.dart';
 import 'package:todo_app/view/screens/profile_screen.dart';
 import 'core/app_routes.dart';
 
-void main() async{
-  await Hive.initFlutter();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    Hive.registerAdapter(UserModelAdapter());
-    Hive.openBox<UserModel>('User');
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserModelAdapter());
+  await Hive.openBox<UserModel>('User');
 
   runApp(const ToDOApp());
 }
