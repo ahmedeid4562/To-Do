@@ -1,6 +1,10 @@
 import 'dart:developer';
 
+
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/core/app_dialog.dart';
+import 'package:todo_app/data/model/task_model.dart';
 import 'package:todo_app/view/widget/choose_color_widget.dart';
 import 'package:todo_app/view/widget/custom_material_button.dart';
 import 'package:todo_app/view/widget/custom_text_form_field.dart';
@@ -31,17 +35,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         padding: const EdgeInsets.all(24),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: .start,
+           crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 15,
             children: [
                CustomTextFormField(
-                   label: "Title Task",
-                   hint: "Enter task title",
+                   label: "Task Title ",
+                   hint: "Design Login Screen",
                    controller: titleText,
                   ),
                  CustomTextFormField(
-                   label: "Description Task",
-                   hint: "Enter task description",
+                   label: "Description ",
+                   hint: "Task Description",
                    maxLines: 4,
                    controller: desText,
                   ),
@@ -61,8 +65,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     isExpanded: true,
                     icon: const Icon(Icons.keyboard_arrow_down),
                     items: ["Pending", "Done"]
-                        .map(
-                          (e) => DropdownMenuItem(
+                        .map(  (e) => DropdownMenuItem(
                             value: e,
                             child: Text(e),
                           ),
@@ -81,15 +84,32 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
              },
             ),
             
-            CustomMaterialButton(
-             onPressed: () {
-               log("Title: ${titleText.text}");
-               log("Des: ${desText.text}");
-               log("Status: $status");
-               log("color: $ColorSelected");
-             },
-             text: "Save",
-             ),  
+          CustomMaterialButton(
+            onPressed: () 
+            async{
+             AppDialog.showLoading(context);
+         await Future.delayed(const Duration(seconds: 3));
+            var taskBox = Hive.box<TaskModel>("Tasks"); 
+            await taskBox.add(
+               TaskModel(
+                 title: titleText.text,
+                 description: desText.text,
+                 status: status == "Pending"  ? .pending : .done,
+                 colortex: ColorSelected,
+               ),
+             ).then((Value){
+              Navigator.of(context).pop();
+              titleText.clear();
+              desText.clear();
+              ColorSelected =4283215696;
+             }).catchError((error){
+               Navigator.of(context).pop();
+               AppDialog.showError(context, error);
+             });
+
+           },
+           text: "Save",
+          ), 
             ],
           ),
         ),
