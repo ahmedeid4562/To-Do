@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/core/app_routes.dart';
+import 'package:todo_app/data/model/task_model.dart';
 import 'package:todo_app/data/model/user_model.dart';
 import 'package:todo_app/view/screens/add_task_screen.dart';
 import 'package:todo_app/view/screens/home_screen.dart';
 import 'package:todo_app/view/screens/profile_screen.dart';
-import 'core/app_routes.dart';
 
-void main() async{
-  await Hive.initFlutter();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    Hive.registerAdapter(UserModelAdapter());
-    Hive.openBox<UserModel>('User');
 
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(StatusTaskAdapter());
+  await Hive.openBox<UserModel>('User');
+   await Hive.openBox<TaskModel>('Tasks');
   runApp(const ToDOApp());
 }
 
@@ -22,7 +26,7 @@ class ToDOApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.profile,
+      initialRoute:getName() == null ? AppRoutes.profile : AppRoutes.home,
       routes: {
         AppRoutes.profile: (context) => ProfileScreen(),
         AppRoutes.home: (context) => HomeScreen(),
@@ -30,4 +34,9 @@ class ToDOApp extends StatelessWidget {
       },
     );
   }
-}
+  String  getName(){
+    var taskBox = Hive.box<UserModel>("User");
+   var User = taskBox.get("UserKey");
+   return User?.fullName??"Error Front Name";
+  }
+} 
