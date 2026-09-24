@@ -26,7 +26,7 @@ class ToDOApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:getName() == null ? AppRoutes.profile : AppRoutes.home,
+      initialRoute:getName() == null ? AppRoutes.profile : AppRoutes.profile,
       routes: {
         AppRoutes.profile: (context) => ProfileScreen(),
         AppRoutes.home: (context) => HomeScreen(),

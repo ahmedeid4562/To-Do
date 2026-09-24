@@ -28,23 +28,23 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
-          spacing: 24,
+          spacing: 12,
           children: [
-             SizedBox(height: 70),
+             SizedBox(height: 75),
              HeaderWidget(fullName: getName(),),
             TaskInfoDetails( numOfTasks: numOfTasks,numOfPending: numOfPending,numOfDon: numOfDon,),
 
              Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 8.0,
-                vertical: 8.0,
+                vertical:10,
               ),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Today's Tasks",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize:18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -218,7 +218,7 @@ class TaskItem extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: const Color(0xffFFFFFF),
@@ -249,7 +249,7 @@ class TaskItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    // width: 250,
+                    width: 250,
                     child: Text(
                       task.description,
                       style: const TextStyle(
@@ -261,7 +261,7 @@ class TaskItem extends StatelessWidget {
                       overflow: .ellipsis,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                   SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                     decoration: BoxDecoration(
@@ -282,7 +282,7 @@ class TaskItem extends StatelessWidget {
             ),
           Spacer(),
           IconButton(onPressed: delete,
-           icon: Icon(Icons.delete,color: Colors.red,size: 30,))
+           icon: Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 30,))
           ],
         ),
       ),
