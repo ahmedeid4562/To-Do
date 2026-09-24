@@ -38,9 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(100),
               ),
               child: const Icon(
-                Icons.person,
-                size: 100,
-                color: Color(0xff3F5185),
+                Icons.person, size: 100,color: Color(0xff3F5185),
               ),
             ),
             const SizedBox(height: 20),

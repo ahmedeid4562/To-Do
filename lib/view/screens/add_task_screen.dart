@@ -88,7 +88,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             onPressed: () 
             async{
              AppDialog.showLoading(context);
-         await Future.delayed(const Duration(seconds: 3));
+         await Future.delayed(const Duration(seconds:1));
             var taskBox = Hive.box<TaskModel>("Tasks"); 
             await taskBox.add(
                TaskModel(
@@ -99,9 +99,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                ),
              ).then((Value){
               Navigator.of(context).pop();
-              titleText.clear();
-              desText.clear();
-              ColorSelected =4283215696;
+              Navigator.of(context).pop();
              }).catchError((error){
                Navigator.of(context).pop();
                AppDialog.showError(context, error);
