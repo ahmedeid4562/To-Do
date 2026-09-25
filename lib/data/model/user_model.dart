@@ -9,4 +9,3 @@ class UserModel extends HiveObject {
 
   UserModel({required this.fullName});
 }
-
